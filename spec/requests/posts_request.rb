@@ -12,6 +12,21 @@ RSpec.describe "Posts", type: :request do
         get '/posts/new'
         expect(response).to be_successful
       end
+      
+      it "access by guest" do
+        get '/posts/new'
+        expect(response).to have_http_status(302)
+      end
+    end
+    
+    it "show" do
+      post = Post.create(
+        title: "test",
+        body: "test",
+        user_id: "1",
+      )
+      get post_path(post)
+      expect(response).to be_successful
     end
   end
 end
